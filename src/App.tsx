@@ -4,9 +4,8 @@ import Loader from './common/Loader';
 import SignIn from './pages/Authentication/SignIn';
 import PageTitle from './components/PageTitle';
 import DefaultLayout from './layout/DefaultLayout';
-import SignUp from './pages/Authentication/ResetPassword';
+import ResetPassword from './pages/Authentication/ResetPassword';
 import ECommerce from './pages/Dashboard/Dashboard';
-
 import axios from 'axios';
 
 
@@ -35,7 +34,7 @@ const App =()=> {
     <Routes>
       <Route index element={<SignIn />} />
       <Route path="/authentication/sign-in" element={<SignIn />} />
-      <Route path="/authentication/reset-password" element={<SignUp />} />
+      <Route path="/authentication/reset-password" element={<ResetPassword />} />
       <Route element={<DefaultLayout children={undefined} />}>
         <Route
           path="/dashboard"

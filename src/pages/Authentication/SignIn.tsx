@@ -50,22 +50,24 @@ const SignIn: React.FC = () => {
     <div className="w-full grid place-items-center h-[100dvh] bg-cover bg-center">
       <div className="sm:w-3/4 rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark shadow-lg">
         <div className="w-full flex flex-wrap">
-          <div className="hidden w-full xl:block xl:w-1/2 bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400 relative overflow-hidden rounded">
-            
-          </div>
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2 z-999999">
             <div className="w-full p-5 sm:p-12.5 xl:p-17.5">
               <h1 className="font-semibold text-lg sm:text-2xl text-gray-600 mb-4">
                 Log into <span className='text-blue-400'>Microfinance</span> <span className="text-yellow-400">Pal</span>
               </h1>
-              <form onSubmit={handleSubmit(handleSignIn)}>
+              <div className='grid sm:grid-cols-2 justify-center sm:gap-x-5'>
+                <div className="hidden sm:block w-full xl:block xl:w-1/2 bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400 relative overflow-hidden rounded">
+                <img src="/C.png" alt="image" width="100%" className="  w-full absolute xl:top-45 top-0 left-5" />
+                <img src="/service.png" alt="image" width="100%"  className=" h-full w-52 absolute top-[35%] -left-5"/>
+                </div>
+                <form onSubmit={handleSubmit(handleSignIn)}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">Email</label>
                   <input
                     type="text"
                     placeholder="Enter your email"
                     {...register('email')}
-                    className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                   {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                 </div>
@@ -75,7 +77,7 @@ const SignIn: React.FC = () => {
                     type="password"
                     placeholder="6+ Characters, 1 Capital letter"
                     {...register('password')}
-                    className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                   {errors.password && <p className="text-red-500">{errors.password.message}</p>}
                 </div>
@@ -87,6 +89,8 @@ const SignIn: React.FC = () => {
                   >{userData.isProcessing ? <Loader className='animate-spin' /> : 'Sign In'}</button>
                 </div>
               </form>
+
+              </div>
             </div>
           </div>
         </div>
