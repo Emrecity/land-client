@@ -24,7 +24,7 @@ export const useUserStore = create<User>((set) => ({
   login: async (data) => {
     set({ isProcessing: true });
     try {
-      const res = await axios.post('/api/v2/auth/login', data,
+      const res = await axios.post('/api/v1/user/login', data,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -34,6 +34,7 @@ export const useUserStore = create<User>((set) => ({
       if (res?.status === 200) {
         const { token, user } = res?.data?.data;
        await localStorage.setItem('token', token);
+       await localStorage.setItem('newPassword', user?.change_password);
         set({
           token,
           name: user?.name,
@@ -47,17 +48,16 @@ export const useUserStore = create<User>((set) => ({
       }
     } catch (err) {
       console.error(err);
-      toast.error('Invalid username or Password');
+      toast.error('Invalid credentials');
     } finally {
       set({ isProcessing: false });
     }
     return false;
   },
 
-
-
   logout: () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('newPassword');
     set({
       name: '',
       email: '',
