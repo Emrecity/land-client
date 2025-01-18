@@ -52,7 +52,23 @@ const SignUp: React.FC = () => {
       <div className="w-3/4 rounded-sm border border-stroke bg-white shadow-card dark:border-strokedark dark:bg-boxdark">
         <div className="w-full flex flex-wrap">
           <div className="hidden w-full xl:block xl:w-1/2 bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400 relative overflow-hidden">
-            
+          <h1 className='w-full grid place-items-center'>
+            <p className="text-white text-4xl font-semibold pt-15 pl-5 ">
+              SingUp to OpenCast<span className="text-yellow-400">GH</span>
+            </p>
+        </h1>
+          <img
+            src="/C.png"
+            alt="image"
+            width="100%"
+            className='object-cover h-125 w-full absolute top-[26%] left-6'
+          />
+          <img
+            src="/service.png"
+            alt="image"
+            width="100%"
+            className='object-cover h- w-52 absolute top-[82%] -left-1'
+          />
           </div>
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">

@@ -41,7 +41,13 @@ const SignIn: React.FC = () => {
       <div className="w-3/4 rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark shadow-lg">
         <div className="w-full flex flex-wrap">
           <div className="hidden w-full xl:block xl:w-1/2 bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400 relative overflow-hidden rounded">
-            
+          <h1 className="w-full grid place-items-center">
+              <p className="text-white text-4xl font-semibold pt-15 pl-5">
+                Welcome to OpenCast<span className="text-yellow-400">GH</span>
+              </p>
+            </h1>
+            <img src="/C.png" alt="image" width="100%" className="object-cover h- w-full absolute xl:top-45 top-35 left-5" />
+            <img src="./service.png" alt="image" width="100%" className="object-cover h- w-52 absolute top-[79%] -left-1" />
           </div>
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2 z-999999">
             <div className="w-full sm:p-12.5 xl:p-17.5">
