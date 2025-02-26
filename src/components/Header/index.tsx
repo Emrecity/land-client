@@ -49,9 +49,9 @@ const Header = (props: {
           </button>
           {/* <!-- Hamburger Toggle BTN --> */}
           <Link
-            className="place-self-end block flex-shrink-0 lg:hidden"
+            className="absolute right-5 top-6 block flex-shrink-0 lg:hidden"
             to="/">
-              <LogOut className='w-5 h-5'/>
+              <LogOut className='w-7h-7'/>
           </Link>
         </div>
         <div className="hidden sm:block">
