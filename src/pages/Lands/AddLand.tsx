@@ -73,6 +73,7 @@ const AddLand = ({close}:AddLandType) => {
     })
 
     function handleSave(e:FormEvent){
+      e.preventDefault()
         if(formInput.isRegistered == '1'){
             if(page<2){
               e.preventDefault()
