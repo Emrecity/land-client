@@ -48,7 +48,7 @@ const App =()=> {
           path="/dashboard"
           element={
            <>
-           <PageTitle title="Dashboard OpenCastGH" />
+           <PageTitle title="Dashboard" />
               <ECommerce />
             </>
           }
@@ -57,7 +57,7 @@ const App =()=> {
           path={route.MANAGE_LANDS}
           element={
             <>
-              <PageTitle title="Manage Business"/>
+              <PageTitle title="Manage Lands"/>
               <ManageLands/>
             </>
           }
@@ -66,7 +66,7 @@ const App =()=> {
           path={route.MANAGE_USERS}
           element={
             <>
-              <PageTitle title="Manage Business"/>
+              <PageTitle title="Manage Users"/>
               <ManageUsers/>
             </>
           }
@@ -75,7 +75,7 @@ const App =()=> {
           path={route.MAILING}
           element={
             <>
-              <PageTitle title="Manage Business"/>
+              <PageTitle title="Mailing"/>
               <Mailing/>
             </>
           }
@@ -84,7 +84,7 @@ const App =()=> {
           path={route.SETTINGS}
           element={
             <>
-              <PageTitle title="Manage Business"/>
+              <PageTitle title="Settings"/>
               <ManageBusiness/>
             </>
           }
