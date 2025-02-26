@@ -195,7 +195,7 @@ const Main:React.FC = () => {
                 })
               }} placeholder='search keyword' className='border-slate-500 border rounded focus:outline-none px-3 bg-slate-200'/>
             </div>
-            <DataTable responsive columns={column} data={filterData}/>
+            <DataTable responsive columns={column} data={filterData} pagination/>
             <AddLand close={CloseAddLand}/>
             <EditLand close={CloseEditLand} id={updateData?._id} plotNo ={updateData?.plotNo} plotsize={updateData?.plotsize} locality={updateData?.locality} owners_image={updateData?.owners_image} owners_name={updateData?.owners_name} owners_phone={updateData?.owners_phone} owners_gender={updateData?.owners_gender} isRegistered={updateData?.isRegistered} streetname={updateData?.streetname}
              />
