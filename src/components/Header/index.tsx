@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import DropdownMessage from './DropdownMessage';
 import DropdownNotification from './DropdownNotification';
-import DropdownUser from './DropdownUser';
+import { route } from '../../helpers/routes';
+import { LogOut } from 'lucide-react';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -50,6 +51,7 @@ const Header = (props: {
           <Link
             className="block flex-shrink-0 lg:hidden"
             to="/">
+              <LogOut className='w-5 h-5'/>
           </Link>
         </div>
         <div className="hidden sm:block">
@@ -91,7 +93,9 @@ const Header = (props: {
 
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
-           
+           <Link to={route.LOGIN}>
+                  
+           </Link>
             {/* <!-- Dark Mode Toggler --> */}
                     <div className='hidden'>
                      {/* <!-- Notification Menu Area --> */}
