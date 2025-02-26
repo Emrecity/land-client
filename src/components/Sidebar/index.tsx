@@ -108,12 +108,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       }`}>
         <NavLink to={route.DASHBOARD} className="text-white flex flex-col items-center gap-2 sm:gap-4 relative">
           <div className="text-white flex items-center gap-2 sm:gap-4">
-          <img
-            src="/logo.png"
-            alt="logo"
-            loading="lazy"
-            className="h-6 w-6 sm:h-7 sm:w-7"
-          />
+         
           {isExpanded && (
             <h1 className="text-base sm:text-lg text-blue-400 font-semibold whitespace-nowrap">
               Stool <span className="text-yellow-400">Lands</span>
