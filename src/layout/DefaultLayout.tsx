@@ -1,12 +1,12 @@
-import React, { useState, ReactNode, useEffect } from 'react';
+import React, { useState, ReactNode} from 'react';
 import Header from '../components/Header/index';
 import Sidebar from '../components/Sidebar/index';
-import { Outlet, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import { Outlet} from 'react-router-dom';
+// import axios from 'axios';
+// import toast from 'react-hot-toast';
 
 const DefaultLayout: React.FC<{ children: ReactNode }> = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 // useEffect(() => {
 //   const getUserProfile = async () => {

@@ -1,14 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import  { useEffect, useRef, useState } from 'react';
 import { NavLink} from 'react-router-dom';
-import { X } from 'lucide-react';
+import {  X } from 'lucide-react';
+import { route } from '../../helpers/routes';
+// import { useQuery } from '@tanstack/react-query';
+// import axios from 'axios';
+// import { companyBranches } from '../../helpers/types';
+// import { LoaderIcon } from 'react-hot-toast';
+
 
 import {
-  Award,
+  User,
   LayoutDashboard,
   Menu,
-  Proportions,
-  Ticket,
-  UserRound,
+  LandPlot,
+  Settings
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -23,6 +28,26 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const sidebar = useRef<any>(null);
 
   const [isExpanded, setIsExpanded] = useState(true);
+
+  // const {data, isLoading} = useQuery({
+  //   queryKey: ['companybranches'],
+  //   queryFn: async ()=>{
+  //     const company_id = localStorage.getItem('companyId');
+  //     const response = await axios.get('/api/v1/branches', {
+  //       headers: {
+  //         "ngrok-skip-browser-warning": "69420"
+  //       },
+  //      params:{
+  //           company_id:company_id
+  //         }
+        
+  //     })
+  //     if(response?.status === 200){
+  //       return response.data.data
+  //     }
+  //     return []
+  //   }
+  // })
 
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -81,7 +106,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       <div className={`flex items-center gap-2 px-6 py-5.5 lg:py-6.5 ${
         !isExpanded ? 'justify-center px-2' : 'justify-between'
       }`}>
-        <NavLink to="/dashboard" className="text-white flex items-center gap-2 sm:gap-4">
+        <NavLink to={route.DASHBOARD} className="text-white flex flex-col items-center gap-2 sm:gap-4 relative">
+          <div className="text-white flex items-center gap-2 sm:gap-4">
           <img
             src="/logo.png"
             alt="logo"
@@ -89,16 +115,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             className="h-6 w-6 sm:h-7 sm:w-7"
           />
           {isExpanded && (
-            <h1 className="text-base sm:text-lg font-semibold whitespace-nowrap">
-              OpenCast<span className="text-yellow-400">GH</span>
+            <h1 className="text-base sm:text-lg text-blue-400 font-semibold whitespace-nowrap">
+              Stool <span className="text-yellow-400">Lands</span>
             </h1>
           )}
+          </div>         
+
         </NavLink>
       </div>
 
    <div className='flex flex-col gap-2'>
    <NavLink
-        to="/dashboard"
+        to={route.DASHBOARD}
         onClick={handleNavClick}
         className={`group relative flex items-center gap-2.5 rounded-sm py-2 ${
           isExpanded ? 'px-4' : 'px-2 justify-center'
@@ -110,47 +138,47 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   
       <NavLink
-        to="/dashboard"
+        to={route.MANAGE_LANDS}
         onClick={handleNavClick}
         className={`group relative flex items-center gap-2.5 rounded-sm py-2 ${
           isExpanded ? 'px-4' : 'px-2 justify-center'
         } font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
       >
-        <Award />
-        {isExpanded && 'Manage Awards'}
+        <LandPlot />
+        {isExpanded && 'Manage Lands'}
       </NavLink>
 
       <NavLink
-        to="/dashboard"
+        to={route.MANAGE_USERS}
         onClick={handleNavClick}
         className={`group relative flex items-center gap-2.5 rounded-sm py-2 ${
           isExpanded ? 'px-4' : 'px-2 justify-center'
         } font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
       >
-        <Ticket />
-        {isExpanded && 'Manage Ticks'}
+        <User />
+        {isExpanded && 'Manage Users'}
       </NavLink>
 
-      <NavLink
-        to="/dashboard"
+      {/* <NavLink
+        to={route.MAILING}
         onClick={handleNavClick}
         className={`group relative flex items-center gap-2.5 rounded-sm py-2 ${
           isExpanded ? 'px-4' : 'px-2 justify-center'
         } font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
       >
         <Proportions />
-        {isExpanded && 'settlements'}
-      </NavLink>
+        {isExpanded && 'Mailing'}
+      </NavLink> */}
 
       <NavLink
-        to="/dashboard"
+        to={route.SETTINGS}
         onClick={handleNavClick}
         className={`group relative flex items-center gap-2.5 rounded-sm py-2 ${
           isExpanded ? 'px-4' : 'px-2 justify-center'
         } font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
       >
-        <UserRound />
-        {isExpanded && 'profile'}
+        <Settings />
+        {isExpanded && 'Settings'}
       </NavLink>
 
     </div>

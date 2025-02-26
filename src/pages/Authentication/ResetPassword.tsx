@@ -4,6 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { LoaderIcon, toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { route } from '../../helpers/routes';
 
 type FormValues = {
   password: string;
@@ -16,31 +17,28 @@ const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
 
   const {mutate,isPending} = useMutation({
-    mutationFn: async (data: FormValues) => {
-      const token = localStorage.getItem('token');
-      const formData = new FormData();
-      formData.append('password', data.password);
-      formData.append('password_confirmation', data.password_confirmation);
-      const response = await axios.post('/api/v1/user/change-default-password', formData,{
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return response.data;
-    },
-    onSuccess: () => {
-      toast.success('User created successfully');
-      navigate('/authentication/sign-in');
-    },
-    onError: (error: any) => {
-      if (axios.isAxiosError(error) && error.response) {
-        const errorMessage = error.response.data.message || 'Failed to create user';
-        toast.error(errorMessage);
-      } else {
-        toast.error('Failed to create user');
+    mutationFn: async(data: FormValues) => {
+      const id = localStorage.getItem('user_id');
+      if(!id){
+        toast.error('Please login first')
+        navigate(route.LOGIN)
+        return
       }
-    },
+      if(data.password !== data.password_confirmation){
+        toast.error('Password and Confirm password mismatch')
+      }
+      if(id){
+        const query = await axios.post(`/api/v1/authencation/change-default-password/${id}`,{password:data.password})
+        if(query.status === 200){
+          toast.success('Password changed successfully')
+          navigate(route.LOGIN)
+        }
+        else{
+          toast.error('Password changed failed')
+        }
+      }
+      return
+    }
   });
 
   const onSubmit = (data: FormValues) => {
@@ -49,24 +47,21 @@ const ResetPassword: React.FC = () => {
 
   return (
     <div className="w-full grid place-items-center h-[100dvh]">
-      <div className="w-3/4 rounded-sm border border-stroke bg-white shadow-card dark:border-strokedark dark:bg-boxdark">
+      <div className="sm:w-3/4  rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark shadow-lg">
         <div className="w-full flex flex-wrap">
-          <div className="hidden w-full xl:block xl:w-1/2 bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400 relative overflow-hidden">
-            
-          </div>
+          <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2 z-999999">
+            <div className="w-full xl:p-17.5">
+              <div className='grid sm:grid-cols-2 p-5 sm:p-0 justify-center sm:gap-x-5'>
+              <div className="hidden sm:block w-full xl:block xl:w-1/2 bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400 relative overflow-hidden rounded h-full">
+                <h1 className='text-white sm:text-2xl xl:text-3xl font-bold absolute my-10 text-center left-[15%]'>Welcome To Microfinance <span className="text-yellow-400">Pal</span></h1>
+                <img src="/C.png" alt="image" width="100%" className="  w-full absolute  xl:top-45 -bottom-5 left-5" />
+                <img src="/service.png" alt="image" width="100%"  className="  w-48 absolute -bottom-5 -left-3"/>
+                </div>
+                <form onSubmit={handleSubmit(onSubmit)} className='sm:m-10'>
 
-          <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-            <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <h1 className="font-semibold text-2xl text-gray-600 mb-4 capitalize">
+                <h1  className="font-semibold py-10 text-lg sm:text-2xl text-gray-600 mb-4">
                 Reset Password
               </h1>
-              <div className='grid sm:grid-cols-2 justify-center sm:gap-x-5'>
-                <div className="hidden sm:block w-full xl:block xl:w-1/2 bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400 relative overflow-hidden rounded">
-                  <img src="/C.png" alt="image" width="100%" className="  w-full absolute xl:top-45 top-0 left-5" />
-                  <img src="/service.png" alt="image" width="100%"  className=" h-full w-52 absolute top-[35%] -left-5"/>
-                </div>
-                <form onSubmit={handleSubmit(onSubmit)}>
-
                   <div className="mb-4">
   <label className="mb-2.5 block font-medium text-black dark:text-white">
     New Password
@@ -140,7 +135,7 @@ const ResetPassword: React.FC = () => {
                    <button
                     type="submit"
                     value="Create account"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90 grid place-items-center"
+                    className="w-full cursor-pointer sm:text-lg rounded-lg border border-primary bg-primary py-2 px-4 text-white transition hover:bg-opacity-90 grid place-items-center"
                     >{isPending ? <LoaderIcon /> : 'Reset Password'}</button>
                   </div>
                 </form>

@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import { useNavigate } from 'react-router-dom';
+import { route } from '../../helpers/routes';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  // const user = JSON.parse(localStorage.getItem('user') || '{}');
   const navigate = useNavigate();
   const handlelogout = () => {
     localStorage.removeItem('token');
-    navigate('/authentication/sign-in');
+    localStorage.removeItem('companyId');
+    navigate(route.LOGIN);
   }
 
   return (
@@ -21,7 +23,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white capitalize">
-            Samasoft Technologies
+            stool lands
           </span>
           <span className="block text-xs capitalize">Admin</span>
         </span>
@@ -78,7 +80,7 @@ const DropdownUser = () => {
                 My Profile
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="#"
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -98,10 +100,10 @@ const DropdownUser = () => {
                 </svg>
                 My Contacts
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
-                to="/settings"
+                to={route.SETTINGS}
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
                 <svg
