@@ -54,8 +54,7 @@ const ResetPassword: React.FC = () => {
               <div className='grid sm:grid-cols-2 p-5 sm:p-0 justify-center sm:gap-x-5'>
               <div className="hidden sm:block w-full xl:block xl:w-1/2 bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400 relative overflow-hidden rounded h-full">
                 <h1 className='text-white sm:text-2xl xl:text-3xl font-bold absolute my-10 text-center left-[15%]'>Welcome To Microfinance <span className="text-yellow-400">Pal</span></h1>
-                <img src="/C.png" alt="image" width="100%" className="  w-full absolute  xl:top-45 -bottom-5 left-5" />
-                <img src="/service.png" alt="image" width="100%"  className="  w-48 absolute -bottom-5 -left-3"/>
+                <img src="/adinkra1.PNG" alt="image" width="100%" className="  w-full absolute  xl:top-45 -bottom-5 " />
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className='sm:m-10'>
 
