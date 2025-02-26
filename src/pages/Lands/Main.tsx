@@ -156,7 +156,7 @@ const Main:React.FC = () => {
               onClick={()=>OpenAddLand()}
               className="w-full sm:w-fit cursor-pointer rounded-lg border border-primary bg-primary px-4 text-white transition hover:bg-opacity-90 grid place-items-center font-bold">Add New</button>
             </div>
-            <div className='flex justify-between my-5'>
+            <div className='flex flex-col gap-y-2 sm:flex-row sm:justify-between my-5'>
               <div className='flex gap-x-5'>
                <select value={filterwords.isRegistered} onChange={(e)=>{
                 setFilterWords({

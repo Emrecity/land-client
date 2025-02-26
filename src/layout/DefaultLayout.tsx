@@ -8,25 +8,7 @@ import { Outlet} from 'react-router-dom';
 const DefaultLayout: React.FC<{ children: ReactNode }> = () => {
   // const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-// useEffect(() => {
-//   const getUserProfile = async () => {
-//     try {
-//       const response = await axios.get('api/user', {
-//         headers: {
-//           Authorization: 'Bearer ' + localStorage.getItem('token')
-//         }
-//       });
-//       // Store user response in local storage
-//       localStorage.setItem('user', JSON.stringify(response.data));
-//     } catch (error) {
-//       localStorage.removeItem('token');
-//       localStorage.removeItem('eventId');
-//       toast.error('User session expired');
-//       navigate('/authentication/sign-in');
-//     }
-//   };
-//   getUserProfile();
-// }, []);
+
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark max-h-screen overflow-y-hidden">
