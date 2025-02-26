@@ -12,7 +12,7 @@ type AddLandType = {
 
 const AddLand = ({close}:AddLandType) => {
  
-    const [formInput,setFormInput] = useState<land>({
+    const [formInput,setFormInput] = useState<land|any>({
       plotNo:'',
       plotsize:'',
       locality:'',
@@ -23,12 +23,14 @@ const AddLand = ({close}:AddLandType) => {
       owners_gender:'',
       owners_phone:''
     })
+    const [sizeType, setSizeType] = useState('')
     const [page , setPage ] = useState(1)
     const [img,setImg] = useState<string|any>(null)
 
     useEffect(()=>{
         setPage(1)
         setImg(null)
+        setSizeType('')
         setFormInput({
           plotNo:'',
           plotsize:'',
@@ -40,7 +42,7 @@ const AddLand = ({close}:AddLandType) => {
           owners_gender:'',
           owners_phone:''
         })
-    },[])
+    },[close])
 
     const {data} =     useQuery({
       queryKey: ['get-locality'],
@@ -63,53 +65,50 @@ const AddLand = ({close}:AddLandType) => {
             'Content-Type':'multipart/form-data'
           }
         })
-        if(response.status==201){
-         await queryClient.refetchQueries({queryKey:['get-lands']})
-         await queryClient.refetchQueries({queryKey:['land-stats'],})
-          toast.success('land created')
-          close()
-        }
+        console.log(response.data.status)
+        if(response.status==200){
+          await queryClient.refetchQueries({queryKey:['get-lands']})
+          await queryClient.refetchQueries({queryKey:['land-stats'],})
+           toast.success('land created')
+           close()
+           return
+         }
+      },
+      onError:async()=>{
+        toast.error('Land already exist')
+        close()
       }
     })
 
     function handleSave(e:FormEvent){
       e.preventDefault()
-        if(formInput.isRegistered == '1'){
-            if(page<2){
-              e.preventDefault()
-                setPage(page+1)
-            }
-        }
-        if(formInput.isRegistered == '0'){
-          const formData = new FormData();
-          formData.append('plotNo', formInput.plotNo);
-          formData.append('plotsize', formInput.plotsize);
-          formData.append('locality', formInput.locality);
-          formData.append('streetname', formInput.streetname);
-          formData.append('isRegistered', formInput.isRegistered);
-            mutate(formData)
-        }
-        if(formInput.isRegistered == ''){
-          e.preventDefault()
-         toast.error('Is registered is required')
-        return
-        }
-        if(page == 2){
-          const formData = new FormData();
-          formData.append('plotNo', formInput.plotNo);
-          formData.append('plotsize', formInput.plotsize);
-          formData.append('locality', formInput.locality);
-          formData.append('streetname', formInput.streetname);
-          formData.append('isRegistered', formInput?.isRegistered||'0');
-          formData.append('owners_name', formInput?.owners_name||'');
-          formData.append('owners_image', img);
-          formData.append('owners_gender', formInput?.owners_gender||'');
-          formData.append('owners_phone', formInput?.owners_phone||'');   
-            mutate(formData)
-            close()
-            queryClient.refetchQueries({queryKey:['get-lands']})
-            return
-        }
+
+      if(page == 1 && formInput.isRegistered =='0'){
+        const uploadData = new FormData()
+        uploadData.append('plotNo',formInput.plotNo)
+        uploadData.append('plotsize',formInput.plotsize)
+        uploadData.append('locality',formInput.locality)
+        uploadData.append('streetname',formInput.streetname)
+        uploadData.append('isRegistered',formInput.isRegistered)
+        mutate(uploadData)
+      } 
+      if(page == 2 && formInput.isRegistered =='1'){
+        const uploadFormData = new FormData()
+        uploadFormData.append('plotNo',formInput.plotNo)
+        uploadFormData.append('plotsize',formInput.plotsize)
+        uploadFormData.append('locality',formInput.locality)
+        uploadFormData.append('streetname',formInput.streetname)
+        uploadFormData.append('isRegistered',formInput.isRegistered)
+        uploadFormData.append('owners_name',formInput.owners_name)
+        uploadFormData.append('owners_gender',formInput.owners_gender)
+        uploadFormData.append('owners_phone',formInput.owners_phone)
+        uploadFormData.append('owners_image',img)
+        mutate(uploadFormData)
+      }
+      if(page == 1 && formInput.isRegistered =='1'){
+        toast.success('Saved,Moving to next page')
+        setPage(page+1)
+      }
     }
   return (
     <Modal modalId='add-land-modal' onClose={close}>
@@ -134,9 +133,12 @@ const AddLand = ({close}:AddLandType) => {
                 <label className="mb-1 block text-black dark:text-white">
                   Plot size*
                 </label>
-                <select 
+               { formInput.plotsize !='text'&& sizeType =='' ?<select 
                 value={formInput.plotsize}
-                onChange={(e)=>setFormInput({...formInput,plotsize:e.target.value})}
+                onChange={(e)=>{setFormInput({...formInput,plotsize:e.target.value})
+                setSizeType('text')
+              }}
+
                 className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
                 >
                   <option>--select option--</option>
@@ -148,7 +150,11 @@ const AddLand = ({close}:AddLandType) => {
                   <option value='3 Acre'>3 Acre</option>
                   <option value='4 Acre'>4 Acre</option>
                   <option value='5 Acre'>5 Acre</option>
+                  <option value='text'>Enter Plot Size</option>
                 </select>
+                  :
+                <input value={formInput.plotsize}
+                onChange={(e)=>setFormInput({...formInput,plotsize:e.target.value})} type='text' placeholder='Enter plot size Eg:25 Acres, 40 Acres, 3 full plot' className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"/>}
             </div>
             <div className='mb-5'>
                 <label className="mb-1 block text-black dark:text-white">
@@ -291,11 +297,14 @@ const AddLand = ({close}:AddLandType) => {
             
             <div className='flex justify-center gap-x-5'>
             <button onClick={(e)=>{
-                e.preventDefault()
-                if(page>1){
-                    setPage(page-1)
-                }
-            }} className='bg-slate-500 py-1 px-4 rounded-lg text-white transition hover:bg-opacity-90'>Back</button>
+                    e.preventDefault()
+                    if(page>1){
+                        setPage(page-1)
+                    }
+                    if(page==1){
+                      close()
+                    }
+                }} className={` ${page == 1?'bg-red-500':'bg-slate-500'} py-1 px-4 rounded-lg text-white transition hover:bg-opacity-90`}>{page == 1?'close':'Back'}</button>
             <button onClick={(e)=>{
                 
                 handleSave(e)}} className="cursor-pointer  rounded-lg border border-primary bg-primary py-1 px-4 text-white transition hover:bg-opacity-90 grid place-items-center font-bold">
