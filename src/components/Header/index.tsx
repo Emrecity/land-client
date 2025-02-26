@@ -50,12 +50,6 @@ const Header = (props: {
           <Link
             className="block flex-shrink-0 lg:hidden"
             to="/">
-            <img
-              src="/logo.png"
-              alt="logo"
-              loading="lazy"
-              className="w-6 h-6 max-sm:w-7 max-sm:h-7"
-            />
           </Link>
         </div>
         <div className="hidden sm:block">
