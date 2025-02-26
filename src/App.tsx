@@ -22,8 +22,9 @@ const App =()=> {
   axios.defaults.headers.common["Accept"] = "application/json";
   axios.defaults.headers.common["Content-Type"] = "application/json";
   axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem('token')}`;
-  axios.defaults.baseURL = `https://land-server.vercel.app/`
+  axios.defaults.baseURL = `http://localhost:3000`
 
+  // `https://land-server.vercel.app/`
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
 

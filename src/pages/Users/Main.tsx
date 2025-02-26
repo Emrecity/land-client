@@ -35,6 +35,7 @@ const Main:React.FC = () => {
     }
   })
 
+  const queryClient = useQueryClient()
   const [keyword,setKeyword] = useState<string>('')
   const [roleFilter,setRoleFilter] = useState<string>('')
 
@@ -58,9 +59,8 @@ const Main:React.FC = () => {
   const {mutate} = useMutation({
     mutationKey:['delete_user'],
     mutationFn:async(id:string|any)=>{
-      const queryClient = useQueryClient()
       const response = await  axios.delete(`/api/v1/user/${id}`)
-      if(response.status==200){
+      if(response.status == 200){
         queryClient.refetchQueries({ queryKey: ['users'] })
         toast.success('User deleted')
       }
@@ -96,7 +96,9 @@ const Main:React.FC = () => {
         }),
         OpenEditUser()
       }} title="Edit" />
-      <DeleteButton handleClick={()=>{mutate(row._id)}} title="Delete" />
+      <DeleteButton handleClick={()=>{
+        mutate(row?._id)
+        }} title="Delete" />
       </div>}
     },
   ]
