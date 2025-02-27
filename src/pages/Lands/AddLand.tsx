@@ -2,8 +2,8 @@ import Modal from '../../components/Modal'
 import { useState,useEffect, FormEvent } from 'react'
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { useMutation , useQueryClient, useQuery} from '@tanstack/react-query';
-import { land, locality, street } from '../../helpers/types';
+import { useMutation , useQueryClient} from '@tanstack/react-query';
+import { land } from '../../helpers/types';
 
 type AddLandType = {
     close:()=>void
@@ -44,16 +44,6 @@ const AddLand = ({close}:AddLandType) => {
         })
     },[close])
 
-    const {data} =     useQuery({
-      queryKey: ['get-locality'],
-      queryFn: async()=>{
-          const response = await axios.get('/api/v1/setting/locality')
-          if(response.status === 200){
-              return response.data.data
-          }
-      }
-  })
-  const streetData = data?.find((item:locality)=>item._id==formInput.locality)
 
     const queryClient = useQueryClient()
 
@@ -160,33 +150,20 @@ const AddLand = ({close}:AddLandType) => {
                 <label className="mb-1 block text-black dark:text-white">
                   Locality*
                 </label>
-                <select 
-                value={formInput.locality}
+                <input type='text' value={formInput.locality}
                 onChange={(e)=>setFormInput({...formInput,locality:e.target.value})}
-                className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white">
-                    <option>--locality name--</option>
-                    {
-                      data?.map((item:locality)=>{
-                        return <option value={item._id}>{item.name}</option>
-                     })
-                    }
-                </select>
+                className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
+                />
             </div>
             <div className='mb-5'>
                 <label className="mb-1 block text-black dark:text-white">
                   Street Name*
                 </label>
-                <select 
-                value={formInput.streetname}
-                onChange={(e)=>setFormInput({...formInput,streetname:e.target.value})}
-                className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white">
-                    <option>--street name--</option>
-                    {
-                      streetData?.streets.map((item:street)=>{
-                        return <option key={item._id} value={item.name}>{item.name}</option>
-                      })
-                    }
-                </select>
+                <input type='text' 
+                 value={formInput.streetname}
+                 onChange={(e)=>setFormInput({...formInput,streetname:e.target.value})}
+                 className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
+                />
               </div>
             <div className='mb-5'>
                 <label className="mb-1 block text-black dark:text-white">

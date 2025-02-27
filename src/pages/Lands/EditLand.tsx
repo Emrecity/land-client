@@ -2,8 +2,9 @@ import Modal from '../../components/Modal'
 import { useState,useEffect, FormEvent } from 'react'
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { useMutation , useQueryClient, useQuery} from '@tanstack/react-query';
-import { locality, street } from '../../helpers/types';
+import { useMutation , useQueryClient} from '@tanstack/react-query';
+import { set } from 'react-hook-form';
+
 
 
 type EditLand = {
@@ -22,7 +23,6 @@ type EditLand = {
 
 const EditLand = ({close,id,plotNo,plotsize,locality,streetname,isRegistered,owners_name,owners_phone,owners_gender,owners_image}:EditLand) => {
 
-  const [editLocal,setEditLocal] = useState(locality)
   const [landData,setLandData] = useState<any>({
     plotNo,
     plotsize,
@@ -56,17 +56,6 @@ const EditLand = ({close,id,plotNo,plotsize,locality,streetname,isRegistered,own
           })
       },[id,close])
   
-      const {data} =     useQuery({
-        queryKey: ['get-locality'],
-        queryFn: async()=>{
-            const response = await axios.get('/api/v1/setting/locality')
-            if(response.status === 200){
-                return response.data.data
-            }
-        }
-    })
-
-    const streetData = data?.find((item:locality)=>item._id==editLocal)
   
       const queryClient = useQueryClient()
   
@@ -167,40 +156,21 @@ const EditLand = ({close,id,plotNo,plotsize,locality,streetname,isRegistered,own
                     <label className="mb-1 block text-black dark:text-white">
                       Locality*
                     </label>
-                    <select 
-                    value={editLocal}
-                    onChange={(e)=>setEditLocal(e.target.value)}
-                    className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white">
-                       {
-                        data?.map((item:locality)=>{
-                          if(item._id == locality)
-                          {return <option>{item.name}</option>}
-                          return
-                        })
-                       }
-                        {
-                          data?.map((item:locality)=>{
-                            return <option value={item._id}>{item.name}</option>
-                         })
-                        }
-                    </select>
+                    <input type='text'
+                    value={landData?.locality}
+                    onChange={(e)=>setLandData(set(landData, 'locality', e.target.value))}
+                    className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
+                    />       
                 </div>
                 <div className='mb-5'>
                     <label className="mb-1 block text-black dark:text-white">
                       Street Name*
                     </label>
-                    { editLocal ?<select 
-                      value={landData?.streetname}
-                      onChange={(e)=>setLandData({...landData,streetname:e.target.value})}
-                    className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white">
-                        <option>{streetname}</option>
-                        {
-                          streetData?.streets.map((item:street)=>{
-                            return <option key={item._id} value={item.name}>{item.name}</option>
-                          })
-                        }
-                    </select>:<input value={streetname}  className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
-                     />}
+                    <input type='text'
+                     value={landData?.streetname}
+                     onChange={(e)=>setLandData({...landData,streetname:e.target.value})}
+                   className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-1 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
+                    />
                   </div>
                 <div className='mb-5'>
                     <label className="mb-1 block text-black dark:text-white">
