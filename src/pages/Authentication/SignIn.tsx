@@ -66,7 +66,7 @@ const SignIn: React.FC = () => {
             <div className="w-full xl:p-17.5">
               <div className='grid sm:grid-cols-2 p-5 sm:p-0 justify-center sm:gap-x-5'>
                 <div className="hidden sm:block w-full xl:block  bg-gradient-to-b from-lime-900 via-lime-700 to-lime-400 relative overflow-hidden rounded h-full">
-                <h1 className='text-white sm:text-2xl xl:text-3xl font-bold absolute my-10 text-center left-[15%]'>Welcome To Stool <span className="text-yellow-400">Lands</span></h1>
+                <h1 className='text-white sm:text-2xl xl:text-3xl font-bold absolute my-10 text-center left-[15%]'>Welcome To Tetrem Stool <span className="text-yellow-400">Lands</span></h1>
                 <img src="/adinkra1.PNG" alt="image" width="100%" className="  w-full absolute md:top-15 xl:top-25 bottom-5 " />
                 </div>
                 <form onSubmit={handleSubmit(handleSignIn)} className='sm:m-10'>
